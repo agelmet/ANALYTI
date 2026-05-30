@@ -1,0 +1,632 @@
+```html
+<!DOCTYPE html>
+<html lang="el" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Inner Balance | Χώρος Προσωπικής Ισορροπίας και Σχέσεων</title>
+    <meta name="description" content="Το Inner Balance αποτελεί έναν εξειδικευμένο χώρο ψυχολογικής υποστήριξης και ψυχοθεραπείας από την Αναλυτή Αλεξάνδρα.">
+    
+    <link rel="icon" href="https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/logogoo.jpg" type="image/jpeg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        luxury: {
+                            dark: '#14181f',
+                            navy: '#1d2733',
+                            champagne: '#d6c5b3',
+                            sand: '#e8e2da',
+                            white: '#faf9f8',
+                            slate: '#747d88'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif'],
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.1)',
+                        'soft': '0 20px 40px -15px rgba(0,0,0,0.05)',
+                        'glow': '0 0 40px -10px rgba(214, 197, 179, 0.3)',
+                        'logo': '0 0 30px rgba(214, 197, 179, 0.4)',
+                    },
+                    animation: {
+                        'kenburns': 'kenburns 20s ease-out both',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'marquee-vertical': 'marqueeVertical 40s linear infinite',
+                    },
+                    keyframes: {
+                        kenburns: {
+                            '0%': { transform: 'scale(1.05)' },
+                            '100%': { transform: 'scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        marqueeVertical: {
+                            '0%': { transform: 'translateY(0)' },
+                            '100%': { transform: 'translateY(-50%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Smooth Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #faf9f8; }
+        ::-webkit-scrollbar-thumb { background: #d6c5b3; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #747d88; }
+
+        /* Typography */
+        .tracking-widest-custom { letter-spacing: 0.2em; }
+        .no-accents { text-transform: uppercase; }
+
+        /* Reveal Animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.4, 0, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.15s; }
+        .reveal-delay-2 { transition-delay: 0.3s; }
+
+        /* Glassmorphism */
+        .glass-nav {
+            background: rgba(250, 249, 248, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(214, 197, 179, 0.3);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Lightbox */
+        #lightbox {
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        }
+        #lightbox.active { opacity: 1; pointer-events: auto; }
+        #lightbox img { transform: scale(0.95); transition: transform 0.4s ease; max-height: 90vh; width: auto; object-fit: contain; }
+        #lightbox.active img { transform: scale(1); }
+
+        /* Vertical Marquee Container */
+        .marquee-vertical-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .marquee-wrapper:hover .marquee-vertical-container {
+            animation-play-state: paused;
+        }
+    </style>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-luxury-white text-luxury-navy font-sans antialiased overflow-x-hidden selection:bg-luxury-champagne selection:text-white">
+
+    <nav class="fixed w-full z-50 transition-all duration-300 glass-nav" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="flex items-center group relative z-50">
+                <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-logo flex items-center justify-center p-1 transform transition-transform duration-500 group-hover:scale-105 animate-pulse-slow">
+                    <img src="https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/logogoo.jpg" alt="Inner Balance Logo" class="w-full h-full rounded-full object-contain">
+                </div>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-10">
+                <a href="#philosophy" class="text-sm font-medium tracking-wider text-luxury-navy hover:text-luxury-champagne transition-colors">ΦΙΛΟΣΟΦΙΑ</a>
+                <a href="#services" class="text-sm font-medium tracking-wider text-luxury-navy hover:text-luxury-champagne transition-colors">ΥΠΗΡΕΣΙΕΣ</a>
+                <a href="#time" class="text-sm font-medium tracking-wider text-luxury-navy hover:text-luxury-champagne transition-colors">ΠΡΟΣΕΓΓΙΣΗ</a>
+                <a href="#space" class="text-sm font-medium tracking-wider text-luxury-navy hover:text-luxury-champagne transition-colors">ΧΩΡΟΣ</a>
+                <a href="#reviews" class="text-sm font-medium tracking-wider text-luxury-navy hover:text-luxury-champagne transition-colors">ΕΜΠΕΙΡΙΕΣ</a>
+                <a href="#contact" class="px-8 py-3 bg-luxury-navy text-white text-xs font-semibold tracking-widest no-accents hover:bg-luxury-champagne hover:text-luxury-navy transition-colors duration-300 shadow-lg">ΕΠΙΚΟΙΝΩΝΙΑ</a>
+            </div>
+
+            <button class="md:hidden text-luxury-navy focus:outline-none relative z-50" id="mobile-menu-btn">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+        
+        <div id="mobile-menu" class="fixed inset-0 bg-luxury-white/95 backdrop-blur-xl z-40 hidden flex-col items-center justify-center space-y-8 pt-20">
+            <a href="#philosophy" class="text-xl font-serif tracking-widest mobile-link">ΦΙΛΟΣΟΦΙΑ</a>
+            <a href="#services" class="text-xl font-serif tracking-widest mobile-link">ΥΠΗΡΕΣΙΕΣ</a>
+            <a href="#time" class="text-xl font-serif tracking-widest mobile-link">ΠΡΟΣΕΓΓΙΣΗ</a>
+            <a href="#space" class="text-xl font-serif tracking-widest mobile-link">Ο ΧΩΡΟΣ</a>
+            <a href="#reviews" class="text-xl font-serif tracking-widest mobile-link">ΕΜΠΕΙΡΙΕΣ</a>
+            <a href="#contact" class="mt-8 px-10 py-4 bg-luxury-navy text-white text-sm font-semibold tracking-widest mobile-link">ΚΛΕΙΣΤΕ ΡΑΝΤΕΒΟΥ</a>
+        </div>
+    </nav>
+
+    <section class="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-20 px-6 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="w-full h-full bg-cover bg-center animate-kenburns" style="background-image: url('https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/analyti1.png');"></div>
+        </div>
+        
+        <div class="absolute inset-0 bg-luxury-dark/60 z-10"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-luxury-dark/40 to-luxury-white z-10"></div>
+
+        <div class="relative z-20 max-w-4xl mx-auto text-center flex flex-col items-center mt-16 md:mt-0 reveal">
+            <span class="text-luxury-champagne text-xs md:text-sm font-semibold tracking-widest-custom mb-6 uppercase block">Inner Balance</span>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif text-white leading-tight mb-8 drop-shadow-2xl font-light">
+                Ένας Χώρος <br>
+                <span class="italic text-luxury-sand">Προσωπικής Ισορροπίας</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-200 mb-12 max-w-2xl font-light leading-relaxed">
+                και Σχέσεων. Αφιερωμένος στην αποκατάσταση της αρμονίας στον εσωτερικό σας κόσμο.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 w-full sm:w-auto">
+                <a href="#contact" class="w-full sm:w-auto px-10 py-4 bg-luxury-champagne text-luxury-dark font-semibold tracking-widest text-sm hover:bg-white transition-all duration-300 shadow-[0_0_30px_rgba(214,197,179,0.3)]">
+                    ΞΕΚΙΝΗΣΤΕ ΕΔΩ
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="philosophy" class="py-32 px-6 bg-luxury-white relative">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-16 items-center">
+            
+            <div class="lg:col-span-6 reveal">
+                <h2 class="text-4xl md:text-5xl font-serif text-luxury-navy mb-8 font-light leading-tight">Η Φιλοσοφία του <br><span class="italic text-luxury-slate">Inner Balance</span></h2>
+                <div class="w-16 h-0.5 bg-luxury-champagne mb-8"></div>
+                <div class="space-y-6 text-luxury-slate font-light leading-relaxed text-lg">
+                    <p>
+                        Το «Inner Balance» αποτελεί έναν εξειδικευμένο χώρο ψυχολογικής υποστήριξης και ψυχοθεραπείας, αφιερωμένο στην αποκατάσταση της αρμονίας στις σχέσεις και τον εσωτερικό κόσμο των ανθρώπων. 
+                    </p>
+                    <p>
+                        Επιστημονική υπεύθυνη του γραφείου είναι η <strong>Αναλυτή Αλεξάνδρα</strong>, πιστοποιημένη Σύμβουλος Ψυχικής Υγείας με εξειδίκευση στη Συμβουλευτική Ζεύγους και Οικογένειας (Εθνικό & Καποδιστριακό Πανεπιστήμιο Αθηνών - Ε.Κ.Π.Α.). Μαζί με τη συνεργάτιδά της, <strong>Κατσιάρα Δήμητρα</strong>, συνθέτουν μια ομάδα που προσεγγίζει την ψυχική υγεία με επιστημονική αρτιότητα και ανθρωποκεντρική προσέγγιση.
+                    </p>
+                    <p>
+                        Η φιλοσοφία μας βασίζεται στην πεποίθηση ότι οι άνθρωποι αναπτύσσονται καλύτερα μέσα σε ένα ασφαλές περιβάλλον, όπου η ατομικότητα συναντά τη συστημική κατανόηση. Είτε πρόκειται για ατομική συνεδρία, είτε για υποστήριξη ζεύγους και οικογένειας, παρέχουμε έναν χώρο ελεύθερο από κριτική.
+                    </p>
+                    <p class="font-medium text-luxury-navy italic">
+                        Με 44 επιβεβαιωμένες συστάσεις, δεσμευόμαστε να προσφέρουμε υπηρεσίες που ανταποκρίνονται στις σύγχρονες ανάγκες του ατόμου, με συνέπεια και σεβασμό.
+                    </p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-6 relative reveal reveal-delay-1 flex justify-center">
+                <div class="relative w-full max-w-md animate-float">
+                    <div class="absolute inset-0 bg-luxury-champagne/20 translate-x-6 translate-y-6 rounded-sm"></div>
+                    <img src="https://github.com/agelmet/ANALYTI/blob/main/analyti%202.png?raw=true" alt="Αναλυτή Αλεξάνδρα" class="relative z-10 w-full h-auto object-cover shadow-2xl rounded-sm border border-luxury-sand/50">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="services" class="py-32 px-6 bg-luxury-sand/20 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <span class="text-luxury-slate font-semibold tracking-widest-custom text-xs uppercase block mb-4">ΕΞΕΙΔΙΚΕΥΣΗ</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-luxury-navy mb-6 font-light">Υπηρεσίες</h2>
+                <div class="w-12 h-0.5 bg-luxury-champagne mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                
+                <div class="glass-card p-10 reveal group hover:-translate-y-2 transition-all duration-500 shadow-soft">
+                    <div class="w-12 h-12 mb-8 border border-luxury-champagne flex items-center justify-center rounded-full text-luxury-champagne group-hover:bg-luxury-champagne group-hover:text-white transition-colors duration-500">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif text-luxury-navy mb-4">Συμβουλευτική Ζεύγους & Οικογένειας</h3>
+                    <p class="text-luxury-slate text-sm font-semibold tracking-widest mb-6">75 ΛΕΠΤΑ</p>
+                    <p class="text-luxury-slate font-light leading-relaxed mb-6">
+                        Οι σχέσεις είναι ένα ζωντανό σύστημα που χρειάζεται φροντίδα. Στο «Inner Balance», βοηθάμε τα ζευγάρια να σπάσουν τους κύκλους των συγκρούσεων και να βρουν ξανά τον κώδικα επικοινωνίας τους. Υποστηρίζουμε τα μέλη να κατανοήσουν τις δυναμικές, να θέσουν όρια και να λειτουργήσουν υποστηρικτικά.
+                    </p>
+                </div>
+
+                <div class="glass-card p-10 reveal reveal-delay-1 group hover:-translate-y-2 transition-all duration-500 shadow-soft">
+                    <div class="w-12 h-12 mb-8 border border-luxury-champagne flex items-center justify-center rounded-full text-luxury-champagne group-hover:bg-luxury-champagne group-hover:text-white transition-colors duration-500">
+                        <i data-lucide="user" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif text-luxury-navy mb-4">Ατομική Ψυχοθεραπεία & Αυτογνωσία</h3>
+                    <p class="text-luxury-slate text-sm font-semibold tracking-widest mb-6">75 ΛΕΠΤΑ</p>
+                    <p class="text-luxury-slate font-light leading-relaxed mb-6">
+                        Η ατομική συνεδρία είναι ο χώρος όπου η προσωπική ιστορία συναντά την ανάγκη για εξέλιξη. Προσφέρουμε τον απαραίτητο χρόνο ώστε να εμβαθύνουμε. Στόχος μας είναι να μετατρέψουμε το «γνώθι σαυτόν» σε καθημερινή στάση ζωής, ενδυναμώνοντας την αυτοεκτίμηση.
+                    </p>
+                </div>
+
+                <div class="glass-card p-10 reveal reveal-delay-2 group hover:-translate-y-2 transition-all duration-500 shadow-soft">
+                    <div class="w-12 h-12 mb-8 border border-luxury-champagne flex items-center justify-center rounded-full text-luxury-champagne group-hover:bg-luxury-champagne group-hover:text-white transition-colors duration-500">
+                        <i data-lucide="heart" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif text-luxury-navy mb-4">Συμβουλευτική Γονέων</h3>
+                    <p class="text-luxury-slate text-sm font-semibold tracking-widest mb-6">75 ΛΕΠΤΑ</p>
+                    <p class="text-luxury-slate font-light leading-relaxed mb-6">
+                        Ο ρόλος του γονέα είναι ο πιο απαιτητικός και ανταποδοτικός. Παρέχουμε καθοδήγηση για τις καθημερινές προκλήσεις, τη διαχείριση της συμπεριφοράς και τη βελτίωση του κλίματος. Εστιάζουμε στο πώς να είστε οι γονείς που επιθυμείτε.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="time" class="py-32 px-6 bg-luxury-navy text-white relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10 text-center reveal">
+            <span class="text-luxury-champagne text-xs font-semibold tracking-widest-custom uppercase block mb-4">Η ΔΙΑΦΟΡΑ ΜΑΣ</span>
+            <h2 class="text-4xl md:text-5xl font-serif mb-10 font-light">Η Αρχιτεκτονική των 75 λεπτών</h2>
+            <p class="text-xl text-luxury-sand font-light mb-16 italic">Γιατί ο Χρόνος είναι ο πιο Πολύτιμος Σύμμαχος</p>
+            
+            <div class="text-left space-y-10 text-gray-300 font-light text-lg leading-relaxed">
+                <p>
+                    Σε έναν κόσμο που κινείται με ιλιγγιώδεις ταχύτητες, όπου οι συνεδρίες συχνά περιορίζονται στο κλασικό "πενηντάλεπτο", στο Inner Balance έχουμε επιλέξει συνειδητά μια διαφορετική οδό: τις συνεδρίες διάρκειας 75 λεπτών. Αυτά τα επιπλέον 25 λεπτά δεν είναι απλώς χρόνος· είναι «θεραπευτικός χώρος».
+                </p>
+
+                <div class="border-l-2 border-luxury-champagne pl-8 py-2">
+                    <h4 class="text-white font-serif text-2xl mb-3">Το «Ξεκαθάρισμα» του Θορύβου</h4>
+                    <p>Στα πρώτα 15-20 λεπτά, ο εγκέφαλος προσπαθεί να "αποβάλει" τον θόρυβο. Στις σύντομες συνεδρίες, όταν αρχίζετε να χαλαρώνετε, ο χρόνος τελειώνει. Στα 75 λεπτά, ο χρόνος "αποσυμπίεσης" εξασφαλίζεται.</p>
+                </div>
+
+                <div class="border-l-2 border-luxury-champagne pl-8 py-2">
+                    <h4 class="text-white font-serif text-2xl mb-3">Η Έννοια της «Ενσωμάτωσης»</h4>
+                    <p>Δεν «κόβουμε» απότομα τη συζήτηση την ώρα που το συναίσθημα βρίσκεται στο ζενίθ. Επιτρέπουμε στο άτομο να ενσωματώσει (integrate) όσα ειπώθηκαν, φεύγοντας με μια αίσθηση «κλεισίματος».</p>
+                </div>
+
+                <div class="border-l-2 border-luxury-champagne pl-8 py-2">
+                    <h4 class="text-white font-serif text-2xl mb-3">Το Ισορροπημένο Σύστημα</h4>
+                    <p>Για να βρει κάποιος την ισορροπία, χρειάζεται ρυθμό. Ο αργός ρυθμός επιτρέπει στο νευρικό σύστημα να κατεβάσει ρυθμούς (down-regulate), να αισθανθεί ασφάλεια και να αποκαλύψει τις λύσεις.</p>
+                </div>
+
+                <p class="text-center text-luxury-champagne font-serif text-2xl mt-12 italic">
+                    Στο Inner Balance, ο χρόνος είναι ο σύμμαχός σας.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="space" class="py-32 px-6 bg-luxury-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <span class="text-luxury-slate font-semibold tracking-widest-custom text-xs uppercase block mb-4">ΠΕΡΙΒΑΛΛΟΝ</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-luxury-navy mb-6 font-light">Ο Χώρος Μας</h2>
+                <div class="w-12 h-0.5 bg-luxury-champagne mx-auto mb-6"></div>
+                <p class="text-luxury-slate font-light max-w-2xl mx-auto">Σχεδιασμένος για να αποπνέει ηρεμία, ζεστασιά και απόλυτη ιδιωτικότητα.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+                
+                <button class="w-full relative group reveal cursor-zoom-in block" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/analyti56.png')">
+                    <img src="https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/analyti56.png" alt="Χώρος 1" class="w-full h-auto shadow-sm transition-transform duration-700 group-hover:scale-[1.02]">
+                    <div class="absolute inset-0 bg-luxury-navy/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+
+                <button class="w-full relative group reveal reveal-delay-1 cursor-zoom-in block" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/analyti5.png')">
+                    <img src="https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/analyti5.png" alt="Χώρος 2" class="w-full h-auto shadow-sm transition-transform duration-700 group-hover:scale-[1.02]">
+                    <div class="absolute inset-0 bg-luxury-navy/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+
+                <button class="w-full relative group reveal reveal-delay-2 cursor-zoom-in block" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/analyti4.png')">
+                    <img src="https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/analyti4.png" alt="Χώρος 3" class="w-full h-auto shadow-sm transition-transform duration-700 group-hover:scale-[1.02]">
+                    <div class="absolute inset-0 bg-luxury-navy/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+
+                <button class="w-full relative group reveal cursor-zoom-in block md:col-span-2 lg:col-span-1" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/analyti3.png')">
+                    <img src="https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/analyti3.png" alt="Χώρος 4" class="w-full h-auto shadow-sm transition-transform duration-700 group-hover:scale-[1.02]">
+                    <div class="absolute inset-0 bg-luxury-navy/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+
+                <button class="w-full relative group reveal reveal-delay-1 cursor-zoom-in block md:col-span-2 lg:col-span-2" onclick="openLightbox('https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/analyti1.png')">
+                    <img src="https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/analyti1.png" alt="Χώρος 5" class="w-full h-auto shadow-sm transition-transform duration-700 group-hover:scale-[1.02]">
+                    <div class="absolute inset-0 bg-luxury-navy/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+
+            </div>
+        </div>
+    </section>
+
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-luxury-dark/95 flex items-center justify-center cursor-zoom-out" onclick="closeLightbox()">
+        <button class="absolute top-8 right-8 text-white hover:text-luxury-champagne transition-colors z-50">
+            <i data-lucide="x" class="w-10 h-10"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="Προβολή Εικόνας" class="shadow-2xl cursor-default" onclick="event.stopPropagation()">
+    </div>
+
+    <section id="reviews" class="py-32 bg-luxury-sand/10 relative border-t border-luxury-sand/30">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+            
+            <div class="reveal">
+                <span class="text-luxury-slate font-semibold tracking-widest-custom text-xs uppercase block mb-4">ΕΜΠΙΣΤΟΣΥΝΗ</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-luxury-navy mb-8 font-light">Η Φωνή των <br>Ανθρώπων Μας</h2>
+                <div class="w-12 h-0.5 bg-luxury-champagne mb-8"></div>
+                <p class="text-luxury-slate font-light text-lg mb-10 leading-relaxed max-w-md">
+                    Με 44 επιβεβαιωμένες συστάσεις, η εμπιστοσύνη σας είναι η μεγαλύτερη απόδειξη της ποιότητας της δουλειάς μας.
+                </p>
+                <a href="https://www.doctoranytime.gr/d/Symvoulos-psychikis-ygeias/kentro-symvouleutikis-kai-therapeias-inner-balance" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-4 px-8 py-4 bg-white border border-luxury-sand text-luxury-navy text-sm font-semibold tracking-widest hover:border-luxury-champagne transition-colors shadow-sm">
+                    ΠΕΡΙΣΣΟΤΕΡΑ ΣΤΟ
+                    <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-6 object-contain" alt="Doctoranytime">
+                </a>
+            </div>
+
+            <div class="h-[600px] overflow-hidden relative marquee-wrapper rounded-sm bg-white shadow-soft border border-luxury-sand/20 p-8">
+                <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none"></div>
+
+                <div class="marquee-vertical-container animate-marquee-vertical">
+                    <div class="space-y-8 pb-8">
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">10.0</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">Παναγιώτα • 1 αξιολόγηση</p>
+                            <p class="text-xs text-luxury-slate mb-3">17 Απριλίου 2026</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Είναι πολύ φιλική και με βοηθάει να ξεκλειδώσω τα συναισθήματα μου. Νοιώθω ότι με καταλαβαίνει πάρα πολύ καλά."</p>
+                        </div>
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">9.4</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">δημητρης • 1 αξιολόγηση</p>
+                            <p class="text-xs text-luxury-slate mb-3">04 Απριλίου 2026</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Μας έκανε και τους δυο να νοιωσουμε άνετα και μας βρήκε πολύ γρήγορα τα σημεία που πρεπει να εστιάσουμε..."</p>
+                        </div>
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">10.0</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">Νίκος • 1 αξιολόγηση</p>
+                            <p class="text-xs text-luxury-slate mb-3">27 Μαρτίου 2026</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Είναι πολλή καλή στην δουλειά της επαγγελματίας και καλός ανθρωπος"</p>
+                        </div>
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">10.0</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">Ελένη • 1 αξιολόγηση</p>
+                            <p class="text-xs text-luxury-slate mb-3">16 Φεβρουαρίου 2026</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Ακούει προσεκτικά και καταλαβαίνει ακριβως αυτό που δυσκολεύεσαι να πεις. Είμαι ευγνώμων."</p>
+                        </div>
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">10.0</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">Σταυρουλα • 2 αξιολογήσεις</p>
+                            <p class="text-xs text-luxury-slate mb-3">19 Νοεμβρίου 2025</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Πραγματικά πηγαίνεις και σου φεύγει ένα βάρος! Είναι η καλύτερη επιλογή που θα μπορούσα να κάνω!"</p>
+                        </div>
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">10.0</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">Άλκηστις • 1 αξιολόγηση</p>
+                            <p class="text-xs text-luxury-slate mb-3">31 Ιουλίου 2025</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Η κυρία Αλεξάνδρα είναι μια ξεχωριστή ιδιοφυία, το πιο ελεύθερο safe place που θα μπορούσε να έχει κανείς..."</p>
+                        </div>
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">10.0</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">Χαρά • 1 αξιολόγηση</p>
+                            <p class="text-xs text-luxury-slate mb-3">13 Μαΐου 2025</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Μοναδική επαγγελματίας! Με άκουσε με πραγματικό ενδιαφέρον και με βοήθησε να βρω ξανά την ισορροπία μου."</p>
+                        </div>
+                    </div>
+                    <div class="space-y-8 pb-8" aria-hidden="true">
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">10.0</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">Παναγιώτα • 1 αξιολόγηση</p>
+                            <p class="text-xs text-luxury-slate mb-3">17 Απριλίου 2026</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Είναι πολύ φιλική και με βοηθάει να ξεκλειδώσω τα συναισθήματα μου. Νοιώθω ότι με καταλαβαίνει πάρα πολύ καλά."</p>
+                        </div>
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">9.4</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">δημητρης • 1 αξιολόγηση</p>
+                            <p class="text-xs text-luxury-slate mb-3">04 Απριλίου 2026</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Μας έκανε και τους δυο να νοιωσουμε άνετα και μας βρήκε πολύ γρήγορα τα σημεία που πρεπει να εστιάσουμε..."</p>
+                        </div>
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">10.0</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">Νίκος • 1 αξιολόγηση</p>
+                            <p class="text-xs text-luxury-slate mb-3">27 Μαρτίου 2026</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Είναι πολλή καλή στην δουλειά της επαγγελματίας και καλός ανθρωπος"</p>
+                        </div>
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">10.0</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">Ελένη • 1 αξιολόγηση</p>
+                            <p class="text-xs text-luxury-slate mb-3">16 Φεβρουαρίου 2026</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Ακούει προσεκτικά και καταλαβαίνει ακριβως αυτό που δυσκολεύεσαι να πεις. Είμαι ευγνώμων."</p>
+                        </div>
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">10.0</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">Σταυρουλα • 2 αξιολογήσεις</p>
+                            <p class="text-xs text-luxury-slate mb-3">19 Νοεμβρίου 2025</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Πραγματικά πηγαίνεις και σου φεύγει ένα βάρος! Είναι η καλύτερη επιλογή που θα μπορούσα να κάνω!"</p>
+                        </div>
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">10.0</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">Άλκηστις • 1 αξιολόγηση</p>
+                            <p class="text-xs text-luxury-slate mb-3">31 Ιουλίου 2025</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Η κυρία Αλεξάνδρα είναι μια ξεχωριστή ιδιοφυία, το πιο ελεύθερο safe place που θα μπορούσε να έχει κανείς..."</p>
+                        </div>
+                        <div class="border-b border-luxury-sand/30 pb-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="font-serif text-2xl text-luxury-champagne font-bold">10.0</span>
+                                <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" class="h-5 object-contain grayscale opacity-50" alt="DA">
+                            </div>
+                            <p class="text-luxury-navy text-sm font-bold uppercase tracking-wider mb-1">Χαρά • 1 αξιολόγηση</p>
+                            <p class="text-xs text-luxury-slate mb-3">13 Μαΐου 2025</p>
+                            <p class="text-luxury-slate font-light italic leading-relaxed">"Μοναδική επαγγελματίας! Με άκουσε με πραγματικό ενδιαφέρον και με βοήθησε να βρω ξανά την ισορροπία μου."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="contact" class="bg-luxury-dark text-white pt-32 pb-12 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://raw.githubusercontent.com/agelmet/ANALYTI/refs/heads/main/analyti1.png')] bg-cover bg-center mix-blend-overlay"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20 border-b border-white/10 pb-20">
+                
+                <div class="lg:col-span-2 reveal">
+                    <h2 class="text-3xl font-serif mb-6 font-light">Επικοινωνία</h2>
+                    <p class="text-gray-400 font-light mb-8 max-w-md leading-relaxed">
+                        Η επούλωση ξεκινά με ένα βήμα. Επικοινωνήστε μαζί μας για να ορίσουμε την πρώτη σας συνεδρία σε ένα περιβάλλον απόλυτης αποδοχής.
+                    </p>
+                    <a href="https://www.doctoranytime.gr/d/Symvoulos-psychikis-ygeias/kentro-symvouleutikis-kai-therapeias-inner-balance" target="_blank" class="inline-flex items-center justify-center bg-luxury-champagne text-luxury-dark px-8 py-4 font-semibold tracking-widest text-sm hover:bg-white transition-colors duration-300">
+                        <img src="https://raw.githubusercontent.com/agelmet/KARAZOLI/refs/heads/main/lgoodoc.jpg" alt="Doctoranytime" class="h-5 mr-3 mix-blend-multiply">
+                        ΚΛΕΙΣΤΕ ΡΑΝΤΕΒΟΥ
+                    </a>
+                </div>
+
+                <div class="reveal reveal-delay-1">
+                    <h4 class="text-xs font-semibold text-luxury-champagne mb-6 uppercase tracking-widest">ΣΤΟΙΧΕΙΑ</h4>
+                    <ul class="space-y-6 text-gray-300 font-light text-sm">
+                        <li class="flex items-start gap-4">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-luxury-champagne shrink-0"></i>
+                            <span>Σικάγου 15,<br>Περιστέρι, Αττική</span>
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <i data-lucide="phone" class="w-5 h-5 text-luxury-champagne shrink-0"></i>
+                            <a href="tel:+306934202339" class="hover:text-white transition-colors text-lg">+30 693 420 2339</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="reveal reveal-delay-2">
+                    <h4 class="text-xs font-semibold text-luxury-champagne mb-6 uppercase tracking-widest">ΩΡΑΡΙΟ</h4>
+                    <ul class="space-y-4 text-gray-300 font-light text-sm">
+                        <li class="flex items-center gap-4 border-b border-white/10 pb-4">
+                            <i data-lucide="calendar" class="w-5 h-5 text-luxury-champagne shrink-0"></i>
+                            <span>Δευτέρα - Σάββατο</span>
+                        </li>
+                        <li class="text-luxury-sand italic">Κατόπιν ραντεβού</li>
+                    </ul>
+                    
+                    <div class="mt-8 flex gap-4">
+                        <a href="#" class="block hover:opacity-80 transition-opacity"><img src="https://raw.githubusercontent.com/agelmet/Image-hosting-/refs/heads/main/icons8-facebook-480.png" alt="Facebook" class="h-8 w-8 object-contain"></a>
+                        <a href="#" class="block hover:opacity-80 transition-opacity"><img src="https://raw.githubusercontent.com/agelmet/Image-hosting-/refs/heads/main/instagram-logo-instagram-icon-transparent-free-png.png.webp" alt="Instagram" class="h-8 w-8 object-contain"></a>
+                        <a href="#" class="block hover:opacity-80 transition-opacity"><img src="https://raw.githubusercontent.com/agelmet/Image-hosting-/refs/heads/main/icons8-linkedin-480.png" alt="LinkedIn" class="h-8 w-8 object-contain"></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 reveal">
+                <p class="text-gray-500 font-light text-sm tracking-wide">© 2026 Inner Balance. Με επιφύλαξη παντός δικαιώματος.</p>
+                <p class="text-gray-500 font-light text-sm tracking-wide">
+                    Designed by <a href="https://advonmedia.com" target="_blank" rel="noopener" class="text-white hover:text-luxury-champagne transition-colors border-b border-transparent hover:border-luxury-champagne">Advon Media</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Logic
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const navbar = document.getElementById('navbar');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+            const icon = mobileMenu.classList.contains('hidden') ? 'menu' : 'x';
+            mobileBtn.innerHTML = `<i data-lucide="${icon}" class="w-8 h-8"></i>`;
+            lucide.createIcons();
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                mobileBtn.innerHTML = `<i data-lucide="menu" class="w-8 h-8"></i>`;
+                lucide.createIcons();
+            });
+        });
+
+        // Navbar Styling on Scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2', 'shadow-sm');
+                navbar.classList.remove('py-3');
+            } else {
+                navbar.classList.add('py-3');
+                navbar.classList.remove('py-2', 'shadow-sm');
+            }
+        });
+
+        // Reveal Animations
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(imageSrc) {
+            lightboxImg.src = imageSrc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            setTimeout(() => {
+                lightboxImg.src = '';
+                document.body.style.overflow = '';
+            }, 400);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
+
+```
